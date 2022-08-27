@@ -1,25 +1,136 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react'
+import "./style.css";
 
-function App() {
+const taskList = [
+  {
+    id: 1,
+    title: 'Tasks',
+    status: 'active',
+    description: 'Quét nhà',
+    checked: false
+  },
+  {
+    id: 2,
+    title: 'Tasks',
+    status: 'active',
+    description: 'Rửa bát',
+    checked: false
+
+  },
+  {
+    id: 3,
+    title: 'Tasks',
+    status: 'active',
+    description: 'Học code',
+    checked: false
+
+  },
+]
+
+
+function Content() {
+
+  const [task, setTask] = useState('')
+  const [tasks, setTasks] = useState(taskList)
+  const [checked, setChecked] = useState([])
+
+  const addTask = () => {
+    const newTask = {
+      id: tasks.length + 1,
+      title: 'Tasks',
+      status: 'active',
+      description: task
+    }
+    if (task) {
+      setTasks([...tasks, newTask])
+      setTask('')
+    } else {
+      alert('Please enter task')
+    }
+  }
+
+  const handleDelete = (id) => {
+    const newTasks = tasks.filter(task => task.id !== id)
+    setTasks(newTasks)
+  }
+
+  // Delete all checked task
+
+
+
+
+  const handleCheck = (id) => {
+    setChecked((prev) => {
+      const isChecked = checked.includes(id);
+      if (isChecked) {
+        // uncheck
+        console.log('uncheck');
+        document.getElementsByTagName('tr')[id].style.textDecoration = 'none';
+        return checked.filter((item) => item !== id);
+
+      }
+      else {
+        // check
+        document.getElementsByTagName('tr')[id].style.textDecoration = 'line-through';
+        console.log('check');
+        return [...prev, id];
+      }
+    });
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+    <div>
+      <h1>Task Manager</h1>
+      <input type="text" placeholder="Enter task" value={task} onChange={(e) => setTask(e.target.value)} />
+
+      <button onClick={addTask}>Add</button>
+      <table className="table align-middle mb-0 bg-white">
+        <thead className="bg-light">
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Description</th>
+            <th>Check</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {tasks.map((task) => (
+            <tr key={task.id}>
+              <td>{task.id}</td>
+              <td>{task.title}</td>
+              <td>{task.status}</td>
+              <td>{task.description}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={checked.includes(task.id)}
+                  onChange={() => handleCheck(task.id)}
+                />
+
+              </td>
+              <td>
+
+                <button onClick={() => handleDelete(task.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+
+        </tbody>
+
+      </table>
+
+
+      <p>Tasks Done: {JSON.stringify(checked)}</p>
+
+
+
+    </div>
+
+  )
+}
+export default Content
