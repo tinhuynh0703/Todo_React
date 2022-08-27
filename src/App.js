@@ -15,7 +15,6 @@ const taskList = [
     status: 'active',
     description: 'Rửa bát',
     checked: false
-
   },
   {
     id: 3,
@@ -23,13 +22,12 @@ const taskList = [
     status: 'active',
     description: 'Học code',
     checked: false
-
   },
 ]
 
 function Content() {
   // TODO: Rename useState Hooks below
-  const [task, setTask] = useState('')
+  const [inputTask, setInputTask] = useState('')
   const [tasks, setTasks] = useState(taskList)
   const [checked, setChecked] = useState([])
 
@@ -39,11 +37,11 @@ function Content() {
       id: tasks.length + 1,
       title: 'Tasks',
       status: 'active',
-      description: task
+      description: inputTask
     }
-    if (task) {
+    if (inputTask) {
       setTasks([...tasks, newTask])
-      setTask('')
+      setInputTask('')
     } else {
       alert('Please enter task')
     }
@@ -72,7 +70,7 @@ function Content() {
     <div>
       <h1>Task Manager</h1>
       // TODO: Write input component
-      <input type="text" placeholder="Enter task" value={task} onChange={(e) => setTask(e.target.value)} />
+      <input type="text" placeholder="Enter task" value={inputTask} onChange={(e) => setInputTask(e.target.value)} />
       // TODO: Write button component
       <button onClick={addTask}>Add</button>
       <table className="table align-middle mb-0 bg-white">
