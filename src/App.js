@@ -27,13 +27,13 @@ const taskList = [
   },
 ]
 
-
 function Content() {
-
+  // TODO: Rename useState Hooks below
   const [task, setTask] = useState('')
   const [tasks, setTasks] = useState(taskList)
   const [checked, setChecked] = useState([])
 
+  // TODO: Rename function below
   const addTask = () => {
     const newTask = {
       id: tasks.length + 1,
@@ -53,38 +53,27 @@ function Content() {
     const newTasks = tasks.filter(task => task.id !== id)
     setTasks(newTasks)
   }
-
-  // Delete all checked task
-
-
-
-
+  // TODO: Refactor prev -> checked and show tasks by description
   const handleCheck = (id) => {
     setChecked((prev) => {
       const isChecked = checked.includes(id);
       if (isChecked) {
-        // uncheck
-        console.log('uncheck');
         document.getElementsByTagName('tr')[id].style.textDecoration = 'none';
         return checked.filter((item) => item !== id);
-
       }
       else {
-        // check
         document.getElementsByTagName('tr')[id].style.textDecoration = 'line-through';
-        console.log('check');
         return [...prev, id];
       }
     });
   }
 
-
   return (
-
     <div>
       <h1>Task Manager</h1>
+      // TODO: Write input component
       <input type="text" placeholder="Enter task" value={task} onChange={(e) => setTask(e.target.value)} />
-
+      // TODO: Write button component
       <button onClick={addTask}>Add</button>
       <table className="table align-middle mb-0 bg-white">
         <thead className="bg-light">
@@ -98,7 +87,6 @@ function Content() {
           </tr>
         </thead>
         <tbody>
-
           {tasks.map((task) => (
             <tr key={task.id}>
               <td>{task.id}</td>
@@ -111,26 +99,16 @@ function Content() {
                   checked={checked.includes(task.id)}
                   onChange={() => handleCheck(task.id)}
                 />
-
               </td>
               <td>
-
                 <button onClick={() => handleDelete(task.id)}>Delete</button>
               </td>
             </tr>
           ))}
-
         </tbody>
-
       </table>
-
-
       <p>Tasks Done: {JSON.stringify(checked)}</p>
-
-
-
     </div>
-
   )
 }
 export default Content
